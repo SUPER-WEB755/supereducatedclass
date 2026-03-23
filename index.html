@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Super Educated Class | Result Portal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#eef1fb;
+}
+.portal-header{
+  background:#1a237e;
+  color:#fff;
+  text-align:center;
+  padding:18px 10px;
+}
+.portal-header img{
+  width:70px;
+  opacity:0.82;
+}
+.portal-header h1{
+  margin:6px 0;
+  font-size:24px;
+}
+.portal-header p{
+  margin:3px 0;
+  font-size:14px;
+  opacity:0.9;
+}
+.container{
+  max-width:900px;
+  margin:20px auto;
+  background:#fff;
+  padding:18px;
+  border-radius:10px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.15);
+}
+.search-box{
+  background:#f8f9ff;
+  border-radius:10px;
+  border:1px solid #c5cae9;
+  padding:18px;
+}
+.search-title{
+  text-align:center;
+  font-size:18px;
+  font-weight:bold;
+  color:#1a237e;
+  margin-bottom:15px;
+}
+label{font-weight:bold}
+select,input{
+  width:100%;
+  padding:9px;
+  margin:6px 0 12px;
+  border:1px solid #bbb;
+  border-radius:5px;
+}
+button{
+  width:100%;
+  padding:12px;
+  background:linear-gradient(135deg,#1a237e,#3949ab);
+  color:#fff;
+  border:none;
+  font-size:17px;
+  border-radius:8px;
+  cursor:pointer;
+}
+.popup-bg{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.7);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+.popup-card{
+  background:#fff;
+  width:95%;
+  max-width:900px;
+  padding:10px;
+  position:relative;
+}
+.close-btn{
+  position:fixed;
+  top:10px;
+  right:15px;
+  font-size:28px;
+  color:red;
+  cursor:pointer;
+  font-weight:bold;
+  z-index:10001;
+}
+.result-card{
+  border:2px solid #1a237e;
+  padding:10px;
+  position:relative;
+}
+.watermark{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  opacity:0.066;
+  pointer-events:none;
+}
+.watermark img{
+  width:300px;
+  filter:grayscale(100%) brightness(1.3);
+}
+.header{
+  text-align:center;
+  border-bottom:2px solid #1a237e;
+}
+.header img{
+  width:60px;
+  opacity:0.85;
+}
+.header h2{
+  margin:4px 0;
+  color:#1a237e;
+}
+.exam-title{
+  text-align:center;
+  font-weight:bold;
+  margin:8px 0;
+  text-decoration:underline;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:8px;
+  font-size:14px;
+}
+th,td{
+  border:1px solid #000;
+  padding:6px;
+  text-align:center;
+}
+th{background:#f1f3ff}
+.pass{color:green;font-weight:bold}
+.fail{color:red;font-weight:bold}
+.notfound{text-align:center;color:red;font-weight:bold}
+</style>
+</head>
+
+<body>
+
+<div class="portal-header">
+<img src="logo.png">
+<h1>SUPER EDUCATED CLASS</h1>
+<p>Shekhpur Daud, Azamgarh</p>
+<p><b>Academic Year:</b> 2026–27</p>
+</div>
+
+<div class="container">
+
+<div class="search-box">
+<div class="search-title">🎓 STUDENT RESULT SEARCH</div>
+
+<label>Year</label>
+<select id="year">
+<option>2025</option>
+<option>2026</option>
+</select>
+
+<label>Class</label>
+<select id="cls">
+<option>LKG</option>
+<option>UKG</option>
+<option>1</option>
+<option>4</option>
+<option>5</option>
+<option>6</option>
+<option>7</option>
+<option>8</option>
+</select>
+
+<label>Term</label>
+<select id="term"> 
+<option<option value="first">First Term</option>
+ value="second">Second Term</option>
+<option value="third">Third Term</option>
+<option value="fourth">Fourth Term</option>
+<option value="fifth">Fifth Term</option>
+<option value="sixth">Sixth Term</option>
+</select>
+
+<label>Roll Number</label>
+<input id="roll">
+
+<label>Admit Card ID</label>
+<div style="display:flex;gap:10px;align-items:center">
+<input id="admit" style="flex:1">
+<label style="font-weight:normal">
+<input type="checkbox" id="other" onclick="toggleOther()"> Other
+</label>
+</div>
+
+<div id="otherbox" style="display:none">
+
+<label>Search By</label>
+<select id="searchby">
+<option value="name">Name</option>
+<option value="father">Father Name</option>
+</select>
+
+<input id="searchtext" placeholder="Enter Name or Father Name">
+
+</div>
+
+<button onclick="showResult()">🔍 SEARCH RESULT</button>
+
+</div>
+
+<div id="output"></div>
+
+</div>
+
+<script>
+
+const data={
+
+"2025":{
+
+"first":{
+
+"LKG":{
+"1":{n:"AARADHYA PRAJAPATI",f:"BABULAL PRAJAPATI",a:"025SECPV",e:35,h:40,m:45,ar:45}
+},
+
+"4":{
+"7":{n:"ANSHIKA PRAJAPATI",f:"MUSAFIR PRAJAPATI",a:"025SECRS",e:41,s:37,m:37,ar:45},
+"5":{n:"SURAJ PRAJAPATI",f:"KAILASH PRAJAPATI",a:"025SEC70",e:27,h:19,m:24,ar:45}
+},
+
+"7":{
+"11":{n:"ANAND PRAJAPATI",f:"DINESH PRAJAPATI",a:"025SECMG",e:20,s:15,m:29,ar:45},
+"8":{n:"ANJALY PRAJAPATI",f:"KAILASH PRAJAPATI",a:"025SECRS",e:23,s:23,m:37,ar:45}
+},
+
+"6":{
+"12":{n:"SHIMANSHU PRAJAPATI",f:"GUDDU PRAJAPATI",a:"025SECPV",e:34,s:35,m:32,ar:45},
+"10":{n:"AMAN PAL",f:"LALBAHADUR PAL",a:"025SECSU",e:40,s:34,m:34,ar:45},
+"3":{n:"PRIYANKA PRAJAPATI",f:"MUSAFIR PRAJAPATI",a:"025SECK9",e:22,s:21,m:37,ar:45}
+}
+
+}
+},
+
+"2026":{
+
+"first":{
+
+"LKG":{
+"1":{n:"AARADHYA PRAJAPATI",f:"BABULAL PRAJAPATI",a:"025514152A",e:40,h:42,m:42,ar:46}
+},
+
+"4":{
+"2":{n:"ANSHIKA PRAJAPATI",f:"MUSAFIR PRAJAPATI",a:"025514155V",e:44,s:43,m:36,ar:46}
+},
+
+"7":{
+"3":{n:"ANAND PRAJAPATI",f:"DINESH PRAJAPATI",a:"025514178H",e:36,s:29,m:35,ar:46}
+},
+
+"6":{
+"4":{n:"SHIMANSHU PRAJAPATI",f:"GUDDU PRAJAPATI",a:"025514156S",e:35,s:37,m:38,ar:46},
+"5":{n:"AMAN PAL",f:"LALBAHADUR PAL",a:"025514135L",e:38,s:34,m:36,ar:46},
+"6":{n:"SARVODAY PRAJAPATI",f:"BABULAL PRAJAPATI",a:"025514165N",e:33,s:23,m:34,ar:46}
+}
+
+},
+
+"second":{
+
+"LKG":{
+"1":{n:"AARADHYA PRAJAPATI",f:"BABULAL PRAJAPATI",a:"025514152A",e:40,h:42,m:42,ar:46}
+},
+
+"4":{
+"2":{n:"ANSHIKA PRAJAPATI",f:"MUSAFIR PRAJAPATI",a:"025514155V",e:44,s:43,m:36,ar:46}
+},
+
+"7":{
+"3":{n:"ANAND PRAJAPATI",f:"DINESH PRAJAPATI",a:"025514178H",e:36,s:29,m:35,ar:46}
+},
+
+"6":{
+"4":{n:"SHIMANSHU PRAJAPATI",f:"GUDDU PRAJAPATI",a:"025514156S",e:35,s:37,m:38,ar:46},
+"5":{n:"AMAN PAL",f:"LALBAHADUR PAL",a:"025514135L",e:38,s:34,m:36,ar:46},
+"6":{n:"SARVODAY PRAJAPATI",f:"BABULAL PRAJAPATI",a:"025514165N",e:33,s:23,m:34,ar:46}
+}
+
+},
+
+"third":{
+
+"LKG":{
+"1":{n:"AARADHYA PRAJAPATI",f:"BABULAL PRAJAPATI",a:"025514152A",e:00,h:00,m:00,ar:00}
+},
+
+"4":{
+"2":{n:"ANSHIKA PRAJAPATI",f:"MUSAFIR PRAJAPATI",a:"025514155V",e:44,s:43,m:36,ar:46},
+"8":{n:"SURAJ PRAJAPATI",f:"KAILASH PRAJAPATI",a:"025514179S",e:44,s:43,m:36,ar:46},
+"7":{n:"RAJ PAL",f:"VIJAY PAL",a:"025514180R",e:44,s:43,m:36,ar:46}
+},
+
+"7":{
+"3":{n:"ANAND PRAJAPATI",f:"DINESH PRAJAPATI",a:"025514178H",e:39,s:29,m:35,ar:46}
+},
+
+"6":{
+"4":{n:"SHIMANSHU PRAJAPATI",f:"GUDDU PRAJAPATI",a:"025514156S",e:35,s:37,m:38,ar:46},
+"5":{n:"AMAN PAL",f:"LALBAHADUR PAL",a:"025514135L",e:38,s:34,m:36,ar:46},
+"6":{n:"SARVODAY PRAJAPATI",f:"BABULAL PRAJAPATI",a:"025514165N",e:33,s:23,m:34,ar:46}
+}
+
+}
+
+}
+
+}; 
+
+function toggleOther(){
+const other=document.getElementById("other").checked;
+document.getElementById("otherbox").style.display=other?"block":"none";
+}
+
+function subStatus(m){return m>=25?"PASS":"FAIL";}
+function closePopup(){const p=document.getElementById("popup");if(p)p.remove();}
+
+function showResult(){
+
+const y=year.value;
+const c=cls.value;
+const t=term.value;
+let r=roll.value;
+const a=admit.value;
+
+const other=document.getElementById("other").checked;
+
+const o=document.getElementById("output");
+
+let s=data?.[y]?.[t]?.[c]?.[r];
+
+if(!other){
+
+if(!s||s.a!==a){
+o.innerHTML="<p class='notfound'>Result Not Found</p>";
+return;
+}
+
+}
+
+else{
+
+const mode=searchby.value;
+const text=searchtext.value.toUpperCase();
+
+const clsData=data?.[y]?.[t]?.[c];
+
+for(let roll in clsData){
+
+let st=clsData[roll];
+
+if(mode==="name" && st.n===text){s=st;r=roll;break;}
+if(mode==="father" && st.f===text){s=st;r=roll;break;}
+
+}
+
+if(!s){
+o.innerHTML="<p class='notfound'>Result Not Found</p>";
+return;
+}
+
+}
+
+const isHindi=(c==="LKG"&&s.h!==undefined);
+const langName=isHindi?"Hindi":"Science";
+const langMarks=isHindi?s.h:s.s;
+let artName="Art";
+
+if(t==="third"){   // जिस term में बदलना है
+if(s.n!=="AARADHYA PRAJAPATI" && s.n!=="ANSHIKA PRAJAPATI"){
+artName="G.K";
+}
+}
+
+const total=s.e+langMarks+s.m+s.ar;
+const per=((total/200)*100).toFixed(2);
+const overall=total>=100?"PASS":"FAIL";
+const nextYear=parseInt(y)+1;
+const session=y+"-"+String(nextYear).slice(-2);
+
+o.innerHTML=`
+
+<div class="popup-bg" id="popup">
+<div class="close-btn" onclick="closePopup()">✖</div>
+
+<div class="popup-card">
+<div class="result-card">
+
+<div class="watermark"><img src="logo.png"></div>
+
+<div class="header">
+<img src="logo.png">
+<h2>SUPER EDUCATED CLASS</h2>
+<div>SHEKHPUR DAUD, AZAMGARH</div>
+</div>
+
+<div class="exam-title">${t.toUpperCase()} TERM EXAMINATION ${session}</div>
+
+<table>
+<tr><th>Name</th><td>${s.n}</td><th>Father Name</th><td>${s.f}</td></tr>
+<tr><th>Class</th><td>${c}</td><th>Roll No</th><td>${r}</td></tr>
+<tr><th>Admit Card ID</th><td colspan="3">${s.a}</td></tr>
+</table>
+
+<table>
+<tr><th>Subject</th><th>Marks</th><th>Max</th><th>Status</th></tr>
+<tr><td>English</td><td>${s.e}</td><td>50</td><td class="${subStatus(s.e)=='PASS'?'pass':'fail'}">${subStatus(s.e)}</td></tr>
+<tr><td>${langName}</td><td>${langMarks}</td><td>50</td><td class="${subStatus(langMarks)=='PASS'?'pass':'fail'}">${subStatus(langMarks)}</td></tr>
+<tr><td>Maths</td><td>${s.m}</td><td>50</td><td class="${subStatus(s.m)=='PASS'?'pass':'fail'}">${subStatus(s.m)}</td></tr>
+<tr>
+<td>${artName}</td>
+<td>${s.ar}</td>
+<td>50</td>
+<td class="${subStatus(s.ar)=='PASS'?'pass':'fail'}">${subStatus(s.ar)}</td>
+</tr>
+<tr><th>Total</th><th>${total}</th><th>200</th><th class="${overall=='PASS'?'pass':'fail'}">${overall}</th></tr>
+</table>
+
+<p><b>Percentage:</b> ${per}% &nbsp;
+<b>Overall Result:</b>
+<span class="${overall=='PASS'?'pass':'fail'}">${overall}</span></p>
+
+</div>
+</div>
+</div>
+
+`;
+
+}
+
+</script>
+
+</body>
+</html>
