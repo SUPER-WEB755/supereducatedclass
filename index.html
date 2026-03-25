@@ -182,8 +182,8 @@ th{background:#f1f3ff}
 
 <label>Term</label>
 <select id="term"> 
-<option<option value="first">First Term</option>
- value="second">Second Term</option>
+<option value="first">First Term</option>
+<option value="second">Second Term</option>
 <option value="third">Third Term</option>
 <option value="fourth">Fourth Term</option>
 <option value="fifth">Fifth Term</option>
@@ -300,14 +300,14 @@ const data={
 
 "third":{
 
-"LKG":{
+"UKG":{
 "1":{n:"AARADHYA PRAJAPATI",f:"BABULAL PRAJAPATI",a:"026405165B",e:39,h:41,m:40,ar:46}
 },
 
 "4":{
 "2":{n:"ANSHIKA PRAJAPATI",f:"MUSAFIR PRAJAPATI",a:"026405166A",e:40,s:41,m:39,ar:45},
 "8":{n:"SURAJ PRAJAPATI",f:"KAILASH PRAJAPATI",a:"026405171K",e:00,s:00,m:00,ar:00},
-"7":{n:"RAJ PAL",f:"VIJAY PAL",a:"026405170E",e:26,s:18,m:22,ar:35}
+"7":{n:"RAJ PAL",f:"VIJAY PAL",a:"026405170F",e:26,s:18,m:22,ar:35}
 },
 
 "7":{
@@ -315,7 +315,7 @@ const data={
 },
 
 "6":{
-"4":{n:"SHIMANSHU PRAJAPATI",f:"GUDDU PRAJAPATI",a:"026405167A",e:34,s:41,m:30,ar:31},
+"4":{n:"SHIMANSHU PRAJAPATI",f:"GUDDU PRAJAPATI",a:"026405167S",e:34,s:41,m:30,ar:31},
 "5":{n:"AMAN PAL",f:"LALBAHADUR PAL",a:"026405168C",e:27,s:42,m:25,ar:32},
 "6":{n:"SARVODAY PRAJAPATI",f:"BABULAL PRAJAPATI",a:"026405166E",e:34,s:39,m:31,ar:33}
 }
@@ -331,7 +331,7 @@ const other=document.getElementById("other").checked;
 document.getElementById("otherbox").style.display=other?"block":"none";
 }
 
-function subStatus(m){return m>=25?"PASS":"FAIL";}
+function subStatus(m){return m>=20?"PASS":"FAIL";}
 function closePopup(){const p=document.getElementById("popup");if(p)p.remove();}
 
 function showResult(){
